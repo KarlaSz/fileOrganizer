@@ -1,0 +1,45 @@
+# File Organizer Script made by Python
+
+This Python script is designed to help organize files in a given directory
+based on their extensions.
+It sorts files into separate folders (e.g., "Images", "Videos", "Documents", etc.)
+depending on the file type.
+
+## Features
+- Automatically organizes files into categorized folders.
+- Supports multiple file types such as images, videos, documents, music, etc.
+- Creates necessary folders if they do not exist.
+- Skips directories and unsupported file types.
+
+## Libraries Used
+The script uses two Python libraries:
+- **`os`**: This library provides functions for interacting with the operating system, such as working with files and directories. In this script, `os` is used to:
+  - Get the list of files in a directory (`os.listdir()`).
+  - Check if a path is a file or a directory (`os.path.isfile()`).
+  - Join paths into a single path (`os.path.join()`).
+  - Create directories if they do not exist (`os.makedirs()`).
+
+- **`shutil`**: This library offers a high-level interface for file operations. In this script, `shutil` is used to:
+  - Move files from one location to another (`shutil.move()`).
+
+## Usage
+1. Clone or download the repository to your local machine.
+2. Modify the `directory` variable in the script to the path of the folder you want to organize. For example:
+   ```python
+   directory = r"C:\...yourFolderPath..."
+
+##Run the script with Python:
+bash
+Copy code
+python file_organizer.py
+The script will automatically organize the files based on their extensions:
+
+Images: .jpg, .png, .gif
+Videos: .mp4, .mov
+Documents: .doc, .pdf, .txt
+Music: .mp3, .wav
+
+## Notes
+The script ignores subdirectories and only processes files.
+If a file has an extension not defined in the script, it will be skipped and a message will be printed.
+If a file is already in the correct folder, it will not be moved again.
