@@ -1,63 +1,63 @@
-# Importujemy niezbędne biblioteki
-import os  # Biblioteka do pracy z systemem plików i systemem operacyjnym
-import shutil  # Biblioteka do operacji na plikach, np. przenoszenia plików
+# Importing necessary libraries
+import os  # Library for interacting with the operating system (working with files and directories)
+import shutil  # Library for high-level file operations like moving files
 
-# Ustalamy folder, który chcemy posortować (folder "Documents" w domowym katalogu użytkownika)
-directory = r"C:\Users\karos\Documents"  # Można zmienić na inny folder, który chcesz posortować
+# Setting the directory that you want to organize (e.g., "Documents" folder in the user's home directory)
+directory = r"C:\Users\karos\Documents"  # You can change this to another folder you want to organize
 
-# Słownik rozszerzeń plików i odpowiadających im folderów, do których będą przenoszone
+# A dictionary that maps file extensions to corresponding folder names
 extensions = {
-    ".jpg": "Images",  # Pliki .jpg będą przenoszone do folderu "Images"
-    ".png": "Images",  # Pliki .png będą przenoszone do folderu "Images"
-    ".gif": "Images",  # Pliki .gif będą przenoszone do folderu "Images"
-    ".mp4": "Videos",  # Pliki .mp4 będą przenoszone do folderu "Videos"
-    ".mov": "Videos",  # Pliki .mov będą przenoszone do folderu "Videos"
-    ".doc": "Documents",  # Pliki .doc będą przenoszone do folderu "Documents"
-    ".pdf": "Documents",  # Pliki .pdf będą przenoszone do folderu "Documents"
-    ".txt": "Documents",  # Pliki .txt będą przenoszone do folderu "Documents"
-    ".mp3": "Music",  # Pliki .mp3 będą przenoszone do folderu "Music"
-    ".wav": "Music"  # Pliki .wav będą przenoszone do folderu "Music"
+    ".jpg": "Images",  # .jpg files will be moved to the "Images" folder
+    ".png": "Images",  # .png files will be moved to the "Images" folder
+    ".gif": "Images",  # .gif files will be moved to the "Images" folder
+    ".mp4": "Videos",  # .mp4 files will be moved to the "Videos" folder
+    ".mov": "Videos",  # .mov files will be moved to the "Videos" folder
+    ".doc": "Documents",  # .doc files will be moved to the "Documents" folder
+    ".pdf": "Documents",  # .pdf files will be moved to the "Documents" folder
+    ".txt": "Documents",  # .txt files will be moved to the "Documents" folder
+    ".mp3": "Music",  # .mp3 files will be moved to the "Music" folder
+    ".wav": "Music"  # .wav files will be moved to the "Music" folder
 }
 
-# Wyświetlamy komunikat o tym, w jakim folderze będą organizowane pliki
+# Displaying which directory is being organized
 print(f"Organizing files in: {directory}")
 
-# Rozpoczynamy iterację po wszystkich plikach i folderach w zadanym katalogu
+# Starting to loop through all files and directories in the specified directory
 for filename in os.listdir(directory):
-    # Tworzymy pełną ścieżkę do pliku lub folderu
+    # Creating the full path for the current file or directory
     file_path = os.path.join(directory, filename)
 
-    # Sprawdzamy, czy to jest plik, a nie folder
+    # Checking if it's a file (not a directory)
     if os.path.isfile(file_path):
-        # Wyodrębniamy rozszerzenie pliku i konwertujemy na małe litery
+        # Extracting the file extension and converting it to lowercase
         extension = os.path.splitext(filename)[1].lower()
 
-        # Logowanie: wyświetlamy nazwę przetwarzanego pliku
+        # Logging: displaying the name of the file being processed
         print(f"Processing file: {filename}")
 
-        # Sprawdzamy, czy rozszerzenie pliku jest zdefiniowane w naszym słowniku
+        # Checking if the file extension is in the defined extensions dictionary
         if extension in extensions:
-            # Pobieramy nazwę folderu, do którego ma zostać przeniesiony plik
+            # Getting the folder name to which the file should be moved
             folder_name = extensions[extension]
 
-            # Tworzymy pełną ścieżkę do folderu (jeśli folder nie istnieje, zostanie utworzony)
+            # Creating the full path for the folder (it will be created if it doesn't exist)
             folder_path = os.path.join(directory, folder_name)
-            os.makedirs(folder_path, exist_ok=True)  # exist_ok=True zapobiega błędowi, gdy folder już istnieje
+            os.makedirs(folder_path, exist_ok=True)  # exist_ok=True prevents error if the folder already exists
 
-            # Tworzymy pełną ścieżkę do miejsca docelowego, gdzie plik ma zostać przeniesiony
+            # Creating the full destination path for where the file will be moved
             destination_path = os.path.join(folder_path, filename)
 
-            # Przenosimy plik do odpowiedniego folderu
+            # Moving the file to the appropriate folder
             shutil.move(file_path, destination_path)
 
-            # Logowanie: wyświetlamy komunikat o przeniesieniu pliku
+            # Logging: displaying the move action for the file
             print(f"Moved {filename} to {folder_name} folder")
         else:
-            # Logowanie: jeśli rozszerzenie pliku nie jest obsługiwane, informujemy o tym
+            # Logging: if the file extension is not recognized, we skip the file and log it
             print(f"Skipped {filename}. Unknown file extension.")
     else:
-        # Logowanie: jeśli napotkaliśmy folder, a nie plik, informujemy o tym
+        # Logging: if the item is a directory, not a file, we skip it and log it
         print(f"Skipped {filename}. It's a directory.")
 
-# Po zakończeniu przetwarzania wszystkich plików wyświetlamy komunikat
+# After all files have been processed, we display a completion message
 print("File organization completed.")
